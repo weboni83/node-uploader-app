@@ -1,0 +1,29 @@
+{
+  "name": "uploader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon src/server.js --ext .js, .hbs --exec babel-node",
+    "build": "babel src -d build && cpx \"./src/views/**/*\" ./build/views --clean && cpx \"./src/public/**/*\" ./build/public --clean",
+    "start": "npm run build && nodemon build/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "mongoose": "^6.3.4",
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.16"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.2",
+    "@babel/node": "^7.17.10",
+    "@babel/preset-env": "^7.18.2",
+    "cpx": "^1.5.0"
+  }
+}

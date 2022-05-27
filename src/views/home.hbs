@@ -1,0 +1,77 @@
+<div id="main">
+  <div class="inner">
+    <div class="columns">
+      {{#each images}}
+        {{#each this}}
+          {{#if imageBase64}}
+            {{! bootstrap cards }}
+            <div class="image fit">
+              <div class="card shadow" style="width:100%;">
+                <img
+                  src="data:{{contentType}};base64,{{imageBase64}}"
+                  {{! class="card-img-top"
+                  class="img-fluid" }}
+                  alt="{{filename}}"
+                />
+                <div class="card-body">
+                  <h5 class="card-title font-poppins">UI/UX Design</h5>
+                  <p class="text-secondary font-size-09">{{filename}}</p>
+                  <a
+                    href="./detail/{{_id}}"
+                    class="btn btn-info font-size-09 text-light"
+                  >Go somewhere</a>
+                </div>
+              </div>
+            </div>
+          {{/if}}
+        {{/each}}
+      {{/each}}
+
+      <!-- Column 1 (horizontal, vertical, horizontal, vertical) -->
+
+      <!-- Column 2 (vertical, horizontal, vertical, horizontal) -->
+      {{! <div class="image fit">
+        <video controls="controls">
+          <source src="images/vid01.mp4" type="video/mp4" alt="되집기 성공" />
+        </video>
+      </div>
+      <div class="image fit">
+        <a href="detail1.html"><img src="images/pic05.jpg" alt="" /></a>
+      </div>
+      <div class="image fit">
+        <a href="detail1.html"><img src="images/pic08.jpg" alt="" /></a>
+      </div> }}
+
+    </div>
+  </div>
+</div>
+
+{{! display images }}
+{{!-- <section class="mt-5">
+  <div class="row">
+    {{#each images}}
+      {{#each this}}
+        {{#if imageBase64}}
+          {{! bootstrap cards }}
+          <div class="col-3">
+            <div class="card shadow" style="width:18rem;">
+              <img
+                src="data:{{contentType}};base64,{{imageBase64}}"
+                class="card-img-top"
+                class="img-fluid"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title font-poppins">UI/UX Design</h5>
+                <p class="text-secondary font-size-09">Some Text</p>
+                <a href="#" class="btn btn-info font-size-09 text-light">Go
+                  somewhere</a>
+              </div>
+            </div>
+          </div>
+        {{/if}}
+      {{/each}}
+    {{/each}}
+
+  </div>
+</section> --}}

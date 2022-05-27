@@ -1,0 +1,37 @@
+{{! <section class="section my-4"> }}
+<div class="container text-center">
+  <div class="title py-5">
+    <h1>Node File Uploader</h1>
+    <p class="subtitle">Upload Images to the <string>Server</string></p>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <form
+        action="/uploadmultiple"
+        enctype="multipart/form-data"
+        method="post"
+      >
+        <div class="row">
+          <div class="col-8">
+            <input
+              type="file"
+              class="form-control"
+              name="images"
+              id="formFile"
+              multiple
+            />
+          </div>
+          <div class="col-2">
+            <input
+              type="submit"
+              class="btn btn-warning"
+              value="이미지 올리기"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{! </section> }}

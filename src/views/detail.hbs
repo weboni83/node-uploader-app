@@ -1,0 +1,75 @@
+<div id="main">
+  <h1>View: Detail</h1>
+
+  <div class="inner">
+    {{#each images}}
+      {{#each this}}
+        {{#if imageBase64}}
+          {{! bootstrap cards }}
+          <div class="image fit">
+            {{! <div class="card shadow"> }}
+            <img
+              src="data:{{contentType}};base64,{{imageBase64}}"
+              {{! class="card-img-top"
+                  class="img-fluid" }}
+              alt="{{filename}}"
+            />
+            <h5 class="card-title font-poppins">{{filename}}</h5>
+            {{!-- <div class="card-body">
+                <h5 class="card-title font-poppins">UI/UX Design</h5>
+                <p class="text-secondary font-size-09">{{filename}}</p>
+                <a
+                  href="./detail/{{_id}}"
+                  class="btn btn-info font-size-09 text-light"
+                >Go somewhere</a>
+              </div>
+            </div> --}}
+          </div>
+        {{/if}}
+      {{/each}}
+    {{/each}}
+  </div>
+</div>
+
+{{!-- <section class="section my-4">
+  <div id="preview">
+    <div class="inner">
+      {{! <div class="columns"> }}
+      {{#each image}}
+        {{#if filename}}
+          <div class="image fit">
+            <div class="card shadow" style="width:100%;">
+              <img
+                src="data:{{contentType}};base64,{{imageBase64}}"
+                alt="{{filename}}"
+              />
+            </div>
+            <div class="content">
+              <header>
+                <h2>{{filename}}</h2>
+              </header>
+              <p>Some text...</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                est ligula, ultrices id posuere vitae, rutrum in tellus.
+                Suspendisse vitae aliquam metus. Cras blandit, tortor ut
+                eleifend porttitor, urna lacus porttitor arcu, quis vestibulum
+                metus dolor ut neque. Aenean et nisi venenatis, mollis enim
+                eget, pharetra nunc. Sed blandit non mi nec ultrices. Vestibulum
+                hendrerit tortor id gravida eleifend. Morbi vitae molestie odio.
+                Etiam nec est vel sapien posuere vulputate eget eget mi. Quisque
+                vulputate ligula velit, id accumsan dui fringilla nec. Morbi
+                nisi mauris, placerat sit amet feugiat nec, vehicula ut ex.</p>
+            </div>
+          </div>
+        {{/if}}
+      {{/each}}
+      {{! </div> }}
+    </div>
+    <a href="./detail" class="nav previous"><span
+        class="fa fa-chevron-left"
+      ></span></a>
+    <a href="./detail" class="nav next"><span
+        class="fa fa-chevron-right"
+      ></span></a>
+  </div>
+</section> --}}
