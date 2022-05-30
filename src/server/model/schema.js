@@ -14,6 +14,10 @@ const uploadSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    required: true,
+  },
 });
 const UploadModel = mongoose.model("uploads", uploadSchema);
 module.exports = UploadModel;

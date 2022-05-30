@@ -5,27 +5,26 @@ const path = require("path");
 
 exports.home = async (req, res) => {
   console.log(`req path -> ${req.path}`);
-  const allImages = await UploadModel.find().sort({ id: -1 }).limit(10);
+  const allImages = await UploadModel.find().sort({ createdAt: -1 }).limit(10);
   res.render("home", { style: "main", images: allImages, uploaderShow: true });
 };
 
-// exports.detail = async (req, res) => {
-//   console.log(`detail query -> ${req.query.filename}`);
-//   const result = await UploadModel.findOne({
-//     filename: req.query.filename,
-//   }).exec();
-
-//   console.log(`Specifies -> ${result.filename}`);
-
-//   res.render("detail", { style: "main", image: result });
-// };
+exports.search = async (req, res) => {
+  console.log(`search query -> ${req.query.filename}`);
+  const allImages = await UploadModel.find({
+    filename: { $regex: req.query.filename },
+  })
+    .sort({ createdAt: -1 })
+    .limit(10);
+  res.render("home", { style: "main", images: allImages, uploaderShow: true });
+};
 
 exports.detailbyId = async (req, res) => {
   console.log(`detailbyId -> ${req.params.file_id}`);
 
   const result = await UploadModel.find({ _id: req.params.file_id });
 
-  console.log(`Specifies -> ${result.filename}`);
+  console.log(`findedById -> ${result.filename}`);
 
   // res.render("detail", { images: result });
 
@@ -58,6 +57,7 @@ exports.uploads = (req, res, next) => {
       filename: files[index].originalname,
       contentType: files[index].mimetype,
       imageBase64: src,
+      createdAt: new Date(),
     };
 
     let newUpload = new UploadModel(finalImg);
