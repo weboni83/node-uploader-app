@@ -1,11 +1,18 @@
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const { engine } = require("express-handlebars");
 const path = require("path");
 
 const port = 3000;
 
 app.use(express.json());
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors());
 // serving static files
 app.use(express.static(path.join(__dirname, "public")));
 console.log(`rootdir -> ${__dirname}`);

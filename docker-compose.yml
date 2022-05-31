@@ -22,4 +22,3 @@ services:
       - mongodb:/data/db
 volumes:
   mongodb:
-#

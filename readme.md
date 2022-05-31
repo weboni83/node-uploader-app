@@ -64,18 +64,27 @@ docker run -d -p 3000:3000 weboni83/node-app:1.0.0
 version: "3"
 services:
   app:
-    container_name: docker-node-mongo
+    container_name: node-app
     restart: always
-    build: .
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /usr/src/app/node_modules
+      - ./:/usr/src/app
     ports:
       - "3000:3000"
-    links:
-      - mongo
+    # links:
+    #   - mongo
   mongo:
-    container_name: mongo
+    container_name: node-mongo
     image: mongo
     ports:
       - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+volumes:
+  mongodb:
 ```
 
 2. .dockerignore 파일 추가하기

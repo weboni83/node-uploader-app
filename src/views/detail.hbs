@@ -1,21 +1,22 @@
 <div id="main">
   <h1>View: Detail</h1>
 
-  <div class="inner">
-    {{#each images}}
-      {{#each this}}
-        {{#if imageBase64}}
-          {{! bootstrap cards }}
-          <div class="image fit">
-            {{! <div class="card shadow"> }}
-            <img
-              src="data:{{contentType}};base64,{{imageBase64}}"
-              {{! class="card-img-top"
+  <div id="preview">
+    <div class="inner">
+      {{#each images}}
+        {{#each this}}
+          {{#if imageBase64}}
+            {{! bootstrap cards }}
+            <div class="image fit">
+              {{! <div class="card shadow"> }}
+              <img
+                src="data:{{contentType}};base64,{{imageBase64}}"
+                {{! class="card-img-top"
                   class="img-fluid" }}
-              alt="{{filename}}"
-            />
-            <h5 class="card-title font-poppins">{{filename}}</h5>
-            {{!-- <div class="card-body">
+                alt="{{filename}}"
+              />
+              <h5 class="card-title font-poppins">{{filename}}</h5>
+              {{!-- <div class="card-body">
                 <h5 class="card-title font-poppins">UI/UX Design</h5>
                 <p class="text-secondary font-size-09">{{filename}}</p>
                 <a
@@ -24,10 +25,11 @@
                 >Go somewhere</a>
               </div>
             </div> --}}
-          </div>
-        {{/if}}
+            </div>
+          {{/if}}
+        {{/each}}
       {{/each}}
-    {{/each}}
+    </div>
   </div>
 </div>
 

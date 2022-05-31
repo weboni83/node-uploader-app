@@ -1,12 +1,29 @@
-const { contentType } = require("express/lib/response");
+const { contentType, json } = require("express/lib/response");
 const UploadModel = require("../model/schema");
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
+
+const menu = [
+  { text: "Home", link: "/", selected: true },
+  { text: "News", link: "/", selected: false },
+  { text: "About", link: "/about", selected: false },
+  { text: "Contact", link: "/", selected: false },
+  { text: "Login", link: "/login", selected: false },
+];
 
 exports.home = async (req, res) => {
   console.log(`req path -> ${req.path}`);
   const allImages = await UploadModel.find().sort({ createdAt: -1 }).limit(10);
-  res.render("home", { style: "main", images: allImages, uploaderShow: true });
+
+  menuSelected("home");
+
+  res.render("home", {
+    style: "main",
+    images: allImages,
+    uploaderShow: false,
+    menu: menu,
+  });
 };
 
 exports.search = async (req, res) => {
@@ -16,7 +33,7 @@ exports.search = async (req, res) => {
   })
     .sort({ createdAt: -1 })
     .limit(10);
-  res.render("home", { style: "main", images: allImages, uploaderShow: true });
+  res.render("home", { style: "main", images: allImages, uploaderShow: false });
 };
 
 exports.detailbyId = async (req, res) => {
@@ -95,5 +112,69 @@ exports.uploads = (req, res, next) => {
 };
 
 exports.about = (req, res) => {
-  res.render("about", { style: "about" });
+  menuSelected("about");
+
+  res.render("about", { style: "main", menu: menu });
 };
+
+exports.login = async (req, res) => {
+  console.log(`login path -> ${req.path}`);
+  // menu.filter((f) => f.selected == true).forEach((p) => (p.selected = false));
+  // menu.find((p) => p.text === "Login").selected = true;
+
+  menuSelected("Login");
+
+  res.render("login", { style: "main", login: false, menu: menu });
+};
+
+exports.signin = async (req, res) => {
+  //body-parser 사용
+  const { username, password } = req.body;
+  console.log(`signin post -> ${username}, ${password}`);
+
+  var session_url = `https://nas.sosoz.me/webapi/auth.cgi?api=SYNO.API.Auth&version=3&method=login&session=FileStation&format=cookie&account=${username}&passwd=${password}`;
+  console.log(session_url);
+
+  const result = await axios.get(session_url);
+
+  console.log(result);
+  console.log(typeof result.data);
+  // // string으로 변환
+  // console.log(typeof JSON.stringify(data));
+  // // 다시 object로 변환
+  // console.log(typeof JSON.parse(stringify(data)));
+  // // String으로 변환하여 출력
+  // console.log(stringify(data));
+  // data.sid
+  let objResult = JSON.parse(JSON.stringify(result.data));
+  console.log(objResult);
+  let sid = objResult.data.sid;
+  console.log(sid);
+
+  res.cookie("sid", sid, {
+    maxAge: 60 * 60 * 1000,
+    httpOnly: true,
+    path: "/",
+  });
+  res.send("sid updated.");
+  // res.send("Hello World!");
+  // res.render("home", {
+  //   style: "main",
+  //   images: allImages,
+  //   uploaderShow: true,
+  //   isLogin: true,
+  // });
+};
+
+// menu toggle function
+//TODO:move to helper.js
+function menuSelected(name) {
+  menu.filter((f) => f.selected === true).forEach((p) => (p.selected = false));
+  // menu.find((p) => p.text === name).selected = true;
+  //NOTE:instead of the code above
+  menu.find(
+    (p) => p.text.localeCompare(name, undefined, { sensitivity: "base" }) == 0
+  ).selected = true;
+
+  console.log(`after => ${name}`);
+}

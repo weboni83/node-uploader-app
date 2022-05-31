@@ -1,0 +1,13 @@
+<div id="nav-bar">
+  <div class="inner">
+    <ul class="nav justify-content-end">
+      {{#menu}}
+        <li class="nav-item">
+          <a class="nav-link {{#if selected}} disabled {{/if}}
+          " href="{{link}}">
+            {{text}}</a>
+        </li>
+      {{/menu}}
+    </ul>
+  </div>
+</div>

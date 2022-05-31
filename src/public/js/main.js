@@ -4,77 +4,94 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
 
-(function($) {
+(function ($) {
+  skel.breakpoints({
+    xlarge: "(max-width: 1680px)",
+    large: "(max-width: 1280px)",
+    medium: "(max-width: 980px)",
+    small: "(max-width: 736px)",
+    xsmall: "(max-width: 480px)",
+  });
 
-	skel.breakpoints({
-		xlarge:	'(max-width: 1680px)',
-		large:	'(max-width: 1280px)',
-		medium:	'(max-width: 980px)',
-		small:	'(max-width: 736px)',
-		xsmall:	'(max-width: 480px)'
-	});
+  $(function () {
+    var $window = $(window),
+      $body = $("body"),
+      $header = $("#header"),
+      $navbar = $("#nav-bar"),
+      $footer = $("#footer");
 
-	$(function() {
+    $window.on("load", function () {
+      window.setTimeout(function () {
+        $header.addClass("hide");
+      }, 1000);
+    });
 
-		var	$window = $(window),
-			$body = $('body'),
-			$header = $('#header'),
-			$footer = $('#footer');
+    // Disable animations/transitions until the page has loaded.
+    $body.addClass("is-loading");
 
-		// Disable animations/transitions until the page has loaded.
-			$body.addClass('is-loading');
+    $window.on("load", function () {
+      window.setTimeout(function () {
+        $body.removeClass("is-loading");
+      }, 100);
+    });
 
-			$window.on('load', function() {
-				window.setTimeout(function() {
-					$body.removeClass('is-loading');
-				}, 100);
-			});
+    // Fix: Placeholder polyfill.
+    $("form").placeholder();
 
-		// Fix: Placeholder polyfill.
-			$('form').placeholder();
+    // Prioritize "important" elements on medium.
+    skel.on("+medium -medium", function () {
+      $.prioritize(
+        ".important\\28 medium\\29",
+        skel.breakpoint("medium").active
+      );
+    });
 
-		// Prioritize "important" elements on medium.
-			skel.on('+medium -medium', function() {
-				$.prioritize(
-					'.important\\28 medium\\29',
-					skel.breakpoint('medium').active
-				);
-			});
+    // Header.
+    $header.each(function () {
+      var t = jQuery(this),
+        button = t.find(".button");
 
-		// Header.
-			$header.each( function() {
+      button.click(function (e) {
+        t.toggleClass("hide");
 
-				var t 		= jQuery(this),
-					button 	= t.find('.button');
+        if (t.hasClass("preview")) {
+          return true;
+        } else {
+          e.preventDefault();
+        }
+      });
+    });
+    // Nav-bar
+    $navbar.each(() => {
+      var t = jQuery(this),
+        inner = t.find(".inner"),
+        links = t.find(".nav-link");
 
-				button.click(function(e) {
+      links.click((e) => {
+        for (var i = 0; i < links.length; i++) {
+          links[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("disabled");
+            current[0].className = current[0].className.replace(
+              " disabled",
+              ""
+            );
+            this.className += " disabled";
+          });
+        }
+        // e.preventDefault();
+      });
+    });
 
-					t.toggleClass('hide');
+    // Footer.
+    $footer.each(function () {
+      var t = jQuery(this),
+        inner = t.find(".inner"),
+        button = t.find(".info");
 
-					if ( t.hasClass('preview') ) {
-						return true;
-					} else {
-						e.preventDefault();
-					}
-
-				});
-
-			});
-
-		// Footer.
-			$footer.each( function() {
-
-				var t 		= jQuery(this),
-					inner 	= t.find('.inner'),
-					button 	= t.find('.info');
-
-				button.click(function(e) {
-					t.toggleClass('show');
-					e.preventDefault();
-				});
-
-			});
-
-	});
-
+      button.click(function (e) {
+        t.toggleClass("show");
+        e.preventDefault();
+      });
+    });
+  });
 })(jQuery);
