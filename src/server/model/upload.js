@@ -19,5 +19,14 @@ const uploadSchema = new mongoose.Schema({
     required: true,
   },
 });
-const UploadModel = mongoose.model("uploads", uploadSchema);
+
+uploadSchema.methods.matchPassword = async (password) => {
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+const UploadModel = mongoose.model("Upload", uploadSchema);
 module.exports = UploadModel;

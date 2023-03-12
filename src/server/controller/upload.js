@@ -1,7 +1,6 @@
 const { contentType, json } = require("express/lib/response");
-const UploadModel = require("../model/schema");
+const UploadModel = require("../model/upload");
 const fs = require("fs");
-const path = require("path");
 const axios = require("axios");
 
 const menu = [
@@ -18,6 +17,7 @@ exports.home = async (req, res) => {
 
   menuSelected("home");
 
+  res.locals.menu = "home";
   res.render("home", {
     style: "main",
     images: allImages,
@@ -41,7 +41,7 @@ exports.detailbyId = async (req, res) => {
 
   const result = await UploadModel.find({ _id: req.params.file_id });
 
-  console.log(`findedById -> ${result.filename}`);
+  console.log(`findedResult.filename -> ${result.filename}`);
 
   // res.render("detail", { images: result });
 
@@ -113,7 +113,7 @@ exports.uploads = (req, res, next) => {
 
 exports.about = (req, res) => {
   menuSelected("about");
-
+  res.locals.menu = "about";
   res.render("about", { style: "main", menu: menu });
 };
 
@@ -122,9 +122,15 @@ exports.login = async (req, res) => {
   // menu.filter((f) => f.selected == true).forEach((p) => (p.selected = false));
   // menu.find((p) => p.text === "Login").selected = true;
 
-  menuSelected("Login");
-
+  menuSelected("login");
+  res.locals.menu = "login";
   res.render("login", { style: "main", login: false, menu: menu });
+};
+
+exports.logout = async (req, res) => {
+  req.logout();
+  req.session.destroy();
+  req.redirect("/");
 };
 
 exports.signin = async (req, res) => {
@@ -164,6 +170,23 @@ exports.signin = async (req, res) => {
   //   uploaderShow: true,
   //   isLogin: true,
   // });
+};
+
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.status(403).send("Not Login");
+  }
+};
+
+exports.isNotLoggedIn = async (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    next();
+  } else {
+    const message = encodeURIComponent("로그인한 상태입니다.");
+    res.redirect(`/?error=${message}`);
+  }
 };
 
 // menu toggle function

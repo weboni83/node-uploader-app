@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-md-12 col-lg-10">
+    <div class="col-md-10 col-lg-10">
       <div class="wrap d-md-flex">
         <div
           class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last"
@@ -13,13 +13,13 @@
           <div class="text w-100">
             <h2>Welcome to login</h2>
             <p>Don't have an account?</p>
-            <a href="#" class="btn btn-white btn-outline-white">Sign Up</a>
+            <a href="/signup" class="btn btn-white btn-outline-white">Sign Up</a>
           </div>
         </div>
         <div class="login-wrap p-4 p-lg-5">
           <div class="d-flex">
             <div class="w-100">
-              <h3 class="mb-4">Sign In</h3>
+              <h3 class="mb-5">Sign In</h3>
             </div>
             <div class="w-100">
               <p class="social-media d-flex justify-content-end">
@@ -34,14 +34,14 @@
               </p>
             </div>
           </div>
-          <form action="/login" class="signin-form" method="post">
+          <form action="/login/password" class="signin-form" method="post">
             <div class="form-group mb-3">
-              <label class="label" for="username">Username</label>
+              <label class="label" for="email">Email</label>
               <input
                 type="text"
-                name="username"
+                name="email"
                 class="form-control"
-                placeholder="Username"
+                placeholder="Email"
                 required
               />
             </div>
@@ -62,8 +62,8 @@
               >Sign In</button>
             </div>
             <div class="form-group d-md-flex">
-              <div class="w-50 text-left">
-                <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
+              <div class="w-100 text-left">
+                <label class="checkbox-wrap checkbox-primary mb-3">Remember Me
                   <input type="checkbox" checked />
                   <span class="checkmark"></span>
                 </label>

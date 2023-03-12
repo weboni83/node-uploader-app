@@ -157,3 +157,57 @@ npm i -D cpx
 # COPY --from=builder /usr/src/app/build  /usr/share/nginx/html
 
 ```
+
+4. 로그인 구현하기
+
+```bash
+npm i passport passport-local passport-kakao crypto
+```
+
+local folder에 파일로 생성 (사용자 계정은 filedb로 관리)
+
+```bash
+npm i mkdirp sqlite3 connect-sqlite3
+```
+
+5. 로거 추가
+
+```bash
+npm i morgan
+```
+
+6. .env 추가해서 개발/운영 포트 변경
+
+```
+touch .env
+
+```
+
+`usage`
+
+```js
+var port = 3000;
+port =
+  process.env.status == "development"
+    ? process.env.dev_port
+    : process.env.prod_port;
+
+app.listen(port, () =>
+  console.log(`Server is Started on http://localhost:${port}`)
+);
+```
+
+7. 404 페이지 추가
+
+```bash
+npm i http-errors
+```
+
+`usage`
+
+```js
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404));
+});
+```
